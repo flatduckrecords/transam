@@ -1,0 +1,23 @@
+   10 REM Variables List (1984) Neil R. Canham BTRANS (1989) Dr Andrew Wright ZXtranSAM (2026) Robert Morrison
+   20 BORDER NOT PI
+   30 LOAD "zxtransam"SCREEN$
+   40 LOAD "main*"CODE
+   50 LOAD "modules"CODE 81920
+   60 LOAD "font"CODE
+   70 PAUSE 200
+   80 POKE &5A45,7: POKE &5C48,7
+   90 BORDER 0: CLS : PALETTE
+  100 INPUT "[T]ape or [D]isk? ";m$: IF m$="" THEN GOTO82
+  110 LET m=CODE m$ BOR &20: IF m=&74 THEN GO SUB 200: DEVICE T: CALL &4000
+  112 IF m=&6E THEN DEVICE N: CALL &4000,0,""
+  114 IF m<>&64 THEN GO TO 100
+  120 DIR PEEK &5A07
+  130 INPUT "Filename? ";f$
+  140 IF f$="" THEN GO TO 120
+  150 IF LEN f$>10 THEN GO TO 130
+  160 GO SUB 200
+  180 CALL &4000,t,f$
+  190 GO TO 9999
+  200 INPUT INVERSE 1;"PLAY"; INVERSE 0;" and "; INVERSE 1;"SPECTRUM"; INVERSE 0;" tokens?"'"[y/n] "; LINE t$
+  210 LET t=(CODE t$ BOR &20)=&79
+  220 RETURN
